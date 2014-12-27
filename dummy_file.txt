@@ -1,0 +1,5 @@
+This is a dummy file for testing the list_todos program
+% this line is a comment without the todo note
+# this line is another comment TODO: add note
+this line has nothing to do with anything
+// another commented line TODO: add some code

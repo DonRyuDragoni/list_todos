@@ -36,9 +36,9 @@ const char *argp_program_bug_address = "<dragoni.ryu@gmail.com>";
 
 // struct to communicate with parse_opt
 struct arguments {
-    char *args[1];
-    int verbose;
-    char *outfile;
+    char *args[1]; // ARG1
+    int fullpath;  // the -f flag
+    char *outfile; // argument for -o
 };
 
 /*
@@ -46,6 +46,7 @@ struct arguments {
  *     fields: {NAME, KEY, ARG, FLAGS, DOC}
  */
 static struct argp_option options[] = {
+    {"fullpath", 'f', 0, 0, "Prints the full path of the file"},
     {"output", 'o', "OUTFILE", 0, "Output to OUTFILE instead of stdin"},
     {0}
 };
@@ -58,8 +59,8 @@ static error_t parse_opt(int key, char *arg, struct argp_state *state) {
     struct arguments *arguments = state->input;
 
     switch(key) {
-        case 'v':
-            arguments->verbose = 1;
+        case 'f':
+            arguments->fullpath = 1;
             break;
         case 'o':
             arguments->outfile = arg;
@@ -100,10 +101,19 @@ int main(int argc, char **argv)
     
     // argument defaults
     arguments.outfile = NULL;
-    arguments.verbose = 0;
+    arguments.fullpath = 0;
 
     // let the magic begin
     argp_parse(&argp, argc, argv, 0, 0, &arguments);
+
+    // change arguments.args[0] into the full name of the file
+    char *full_filename = realpath(arguments.args[0], NULL);
+    // if asked, print the full path of the file, instead of just its name
+    char *filename;
+    if (arguments.fullpath)
+        filename = full_filename;
+    else
+        filename = arguments.args[0];
 
     // send the output to outfile, if asked
     FILE *outstream;
@@ -112,15 +122,16 @@ int main(int argc, char **argv)
     else
         outstream = stdout;
 
-    fprintf(outstream, "File %s:\n\n", arguments.args[0]);
-
     // Dummy file for testing
-    FILE *fp = fopen("dummy_file.txt", "r");
+    FILE *fp = fopen(full_filename, "r");
     if (fp == NULL) {
         // Print error to stderr
-        fprintf(stderr, "Failed to open file %s\n", argv[1]);
+        fprintf(stderr, "Failed to open file %s\n", filename);
         return EXIT_FAILURE;
     }
+
+    // Prints the filename
+    fprintf(outstream, "File %s:\n\n", filename);
 
     // Search for the string TODO in current file, line by line
     // if found, print the whole line

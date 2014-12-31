@@ -1,17 +1,27 @@
 SHELL=/bin/bash
 
 COMPILER=gcc
-FILENAME=list_todos
+PROJECTNAME=list_todos
+SRCPATH=./src
+OBJPATH=./obj
+EXEPATH=.
 EXT=c
-OUT=out
+EXE=out
 
-all: $(FILENAME).$(OUT)
+all: $(EXEPATH)/$(PROJECTNAME).$(EXE)
 
-$(FILENAME).$(OUT): $(FILENAME).$(EXT)
+$(OBJPATH):
+	mkdir -p $@
+
+$(EXEPATH)/$(PROJECTNAME).$(EXE): $(OBJPATH)/list_todos.o
 	$(COMPILER) $^ -o $@
 
-run: $(FILENAME).$(OUT)
-	./$^
+$(OBJPATH)/list_todos.o: $(SRCPATH)/list_todos.c | $(OBJPATH)
+	$(COMPILER) -c $^ -o $@
+
+$(OBJPATH)/parser.o: $(SRCPATH)/parser.c | $(OBJPATH)
+	$(COMPILER) -c $^ -o $@
 
 clean:
-	rm $(FILENAME).$(OUT)
+	rm $(EXEPATH)/$(PROJECTNAME).$(EXE) $(OBJPATH)/*
+	rmdir $(OBJPATH)

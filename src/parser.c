@@ -28,7 +28,7 @@ struct arguments {
 static struct argp_option options[] = {
     {"fullpath", 'f', 0, 0, "Prints the full path of the file"},
     {"line-size", 's', "LINESIZE", 0, "Change line (buffer) size, in bytes"},
-    {"output", 'o', "OUTFILE", 0, "Output to OUTFILE instead of stdin"},
+    {"output", 'o', "OUTFILE", 0, "Output to OUTFILE instead of stdout"},
     {"ignore-warnings", 'i', 0, 0, "Ignore buffer size checking and run anyway; please note this leads to unknown behavior"},
     {0}
 };

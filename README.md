@@ -8,12 +8,12 @@ be it in the beginning, middle or end. For proof of concept, there is a file
 called dummy_file.txt with some junk lines. When called on this file, output
 shoud be of sort:
 
-> File dummy_file.txt
->
-> On line 3:
->     # this line is another comment TODO: add note
-> On line 5:
->     # another comment line TODO: add some code
+    File dummy_file.txt
+
+    On line 3:
+        # this line is another comment TODO: add note
+    On line 5:
+        # another comment line TODO: add some code
 
 Also, *nix-like help is available if you call the program without aguments;
 this is implemented with the `argp.h` parser, so may cause portability issues.
@@ -53,6 +53,16 @@ Options
 - `--usage`: give a shor usage message for the program;
 - `-V`, `--version`: prints the program version.
 
+Known needs
+-----------
+
+It is known to the author that this program needs a lot of improvements, so I'm
+listing my thoughts now to avoid unecessary requests.
+
+- most important thing, find the line size without user help;
+- organize the code for the parser, now parser.h is just a copy of parser.c;
+- multiple filename inputs (don't know if needed).
+
 Notes
 -----
 
@@ -60,4 +70,6 @@ My whole experience with some usefull C program is this one; so, please, do not
 complain about the `parser.h` and `parcer.c` files. I'll fix them in due time.
 Hopefully soon.
 
-Also, bugs can be reported [here][issues], or on [this email][<mailto:dragoni.ryu@gmail.com>].
+Also, bugs can be reported [here][issues], or on [this email][myemail].
+
+[myemail]: <mailto:dragoni.ryu@gmail.com>

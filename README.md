@@ -1,4 +1,4 @@
-List TODOS
+List TODOs
 ==========
 
 This provides a simple way of listing TODO notes on a given file.
@@ -19,14 +19,14 @@ Also, *nix-like help is available if you call the program without aguments;
 this is implemented with the `argp.h` parser, so may cause portability issues.
 
 The Options section below has the comprehensive list, which can be viewed with
-`list-todos --help`.
+`./list_todos.out --help`.
 
 Install
 -------
 
 There is a simple Makefile in the main directory of this program; running
 with `make` should create the object files and link them into the
-`./list-todosi.out` executable in the main directory. If this is added to the
+`list_todos.out` executable in the main directory. If this is added to the
 path, will run as any normal program.
 
 The reason there is no `make install`is because the program is not yet finished

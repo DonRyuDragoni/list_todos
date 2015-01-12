@@ -19,17 +19,17 @@
  *
  */
 
-// Constants
-#define TODO "TODO:" // string to be searched
-
 // Required libraries
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
 #include"parser.h"
 
+// Constants
+#define TODO "TODO:" // string to be searched
+
 // scans the whole file for inconsistent lines
-// (inconsisted lines = scanned buffer with no '\n')
+// (inconsisted lines = scanned buffer with no '\n' and not in the enf of file)
 int check_buffer_size(FILE *fp, int buffer_size)
 {
     char buffer[buffer_size];

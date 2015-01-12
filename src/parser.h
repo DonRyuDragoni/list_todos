@@ -1,11 +1,26 @@
+/*
+ * parser.h
+ *
+ * To be imported by the main file, this uses the GNU argp.h for command-line
+ * arguments parsing, so it behaves more naturally (e.g. --help command, or
+ * printing the usage when called without arguments).
+ *
+ * Maybe defining everything in a header is not the best practice, but this
+ * is how i got it to work.
+ *
+ */
+
+#ifndef PARSER_H_8380A159_48C3_4BE8_9E90_3C7D7B0F1F28
+#define PARSER_H_8380A159_48C3_4BE8_9E90_3C7D7B0F1F28
+
+// Required libraries
+#include<argp.h>
+
 // Default behavior of the program
 #define DEFAULT_LINE_SIZE 700      // buffer to read line by line
 #define DEFAULT_SHOW_FULLPATH 0    // show fullpath or only filename
 #define DEFAULT_PRINT_OUTFILE NULL // print to outfile or to stdout
 #define DEFAULT_IGNORE_WARNINGS 0  // ignore warnings and run the program anyway
-
-// Required libraries
-#include<argp.h>
 
 // program version
 const char *argp_program_version = "list_todos 1.1";
@@ -27,7 +42,7 @@ struct arguments {
  */
 static struct argp_option options[] = {
     {"fullpath", 'f', 0, 0, "Prints the full path of the file"},
-    {"line-size", 's', "LINESIZE", 0, "Change line (buffer) size, in bytes"},
+    {"line-size", 's', "LINESIZE", 0, "Change line (buffer) size, in characters"},
     {"output", 'o', "OUTFILE", 0, "Output to OUTFILE instead of stdout"},
     {"ignore-warnings", 'i', 0, 0, "Ignore buffer size checking and run anyway; please note this leads to unknown behavior"},
     {0}
@@ -90,3 +105,5 @@ static char doc[] = "list_todos -- A program to list all TODO notes in a file.";
 
 // The ARGP structure
 static struct argp argp = {options, parse_opt, args_doc, doc};
+
+#endif // PARSER_H_8380A159_48C3_4BE8_9E90_3C7D7B0F1F28

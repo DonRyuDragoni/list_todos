@@ -8,7 +8,7 @@ be it in the beginning, middle or end. For proof of concept, there is a file
 called dummy_file.txt with some junk lines. When called on this file, output
 shoud be of sort:
 
-    File dummy_file.txt
+    File dummy_file.txt:
 
     On line 3:
         # this line is another comment TODO: add note

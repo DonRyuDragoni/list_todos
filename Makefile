@@ -6,22 +6,20 @@ SRCPATH=./src
 OBJPATH=./obj
 EXEPATH=.
 EXT=c
-EXE=out
+EXE=.out
+EXECUTABLE=$(PROJECTNAME)$(EXE)
 
-all: $(EXEPATH)/$(PROJECTNAME).$(EXE)
+all: $(EXEPATH)/$(EXECUTABLE)
 
 $(OBJPATH):
 	mkdir -p $@
 
-$(EXEPATH)/$(PROJECTNAME).$(EXE): $(OBJPATH)/list_todos.o
+$(EXEPATH)/$(EXECUTABLE): $(OBJPATH)/list_todos.o
 	$(COMPILER) $^ -o $@
 
-$(OBJPATH)/list_todos.o: $(SRCPATH)/list_todos.c | $(OBJPATH)
-	$(COMPILER) -c $^ -o $@
-
-$(OBJPATH)/parser.o: $(SRCPATH)/parser.c | $(OBJPATH)
-	$(COMPILER) -c $^ -o $@
+$(OBJPATH)/list_todos.o: $(SRCPATH)/list_todos.c $(SRCPATH)/parser.h | $(OBJPATH)
+	$(COMPILER) -c $(SRCPATH)/list_todos.c -o $@
 
 clean:
-	rm $(EXEPATH)/$(PROJECTNAME).$(EXE) $(OBJPATH)/*
+	rm $(EXEPATH)/$(EXECUTABLE) $(OBJPATH)/*
 	rmdir $(OBJPATH)

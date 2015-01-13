@@ -110,7 +110,7 @@ int main(int argc, char **argv)
         fclose(fp);
 
         // if current file is not the last, print an aditional newline
-        if(current_file != arguments.filenum) printf("\n");
+        if(current_file != arguments.filenum - 1) printf("\n");
 
         // and go to the next
         ++current_file;

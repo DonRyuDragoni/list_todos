@@ -17,7 +17,7 @@ $(OBJPATH):
 $(EXEPATH)/$(EXECUTABLE): $(OBJPATH)/list_todos.o
 	$(COMPILER) $^ -o $@
 
-$(OBJPATH)/list_todos.o: $(SRCPATH)/list_todos.c $(SRCPATH)/parser.h $(SRCPATH)/array.h | $(OBJPATH)
+$(OBJPATH)/list_todos.o: $(SRCPATH)/list_todos.c $(SRCPATH)/parser.h | $(OBJPATH)
 	$(COMPILER) -c $(SRCPATH)/list_todos.c -o $@
 
 clean:

@@ -9,10 +9,9 @@ called dummy_file.txt with some junk lines. When called on this file, output
 shoud be of sort:
 
     (1/1) File dummy_file.txt:
-
-    On line 3:
+    |_ line 3:
         # this line is another comment TODO: add note
-    On line 5:
+    |_ line 5:
         # another comment line TODO: add some code
 
 Also, *nix-like help is available if you call the program without aguments;

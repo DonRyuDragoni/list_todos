@@ -20,6 +20,7 @@
 #define DEFAULT_LINE_SIZE 700      // buffer to read line by line
 #define DEFAULT_SHOW_FULLPATH 0    // show fullpath or only filename
 #define DEFAULT_PRINT_OUTFILE NULL // print to outfile or to stdout
+#define DEFAULT_FILECOUNT 1        // display or not filecount before each filename
 #define DEFAULT_IGNORE_WARNINGS 0  // ignore warnings and run the program anyway
 
 // program version
@@ -33,6 +34,7 @@ struct arguments {
     int line_size; // argument for -s, change default size of lines
     char *outfile; // argument for -o, file to be printed in
     int ignore_warnings;  // the -i flag, ignore or not warnings
+    int filecount; // the -c flag, display or not count of files
     int filenum; // number of files listed as arguments
     char *args[]; // name of the files to be opened
 };
@@ -42,10 +44,11 @@ struct arguments {
  *     fields: {NAME, KEY, ARG, FLAGS, DOC}
  */
 static struct argp_option options[] = {
-    {"fullpath", 'f', 0, 0, "Prints the full path of the file"},
-    {"line-size", 's', "LINESIZE", 0, "Change line (buffer) size, in characters"},
-    {"output", 'o', "OUTFILE", 0, "Output to OUTFILE instead of stdout"},
-    {"ignore-warnings", 'i', 0, 0, "Ignore buffer size checking and run anyway; please note this leads to unknown behavior"},
+    {"filecount",       'c', 0,          0, "Do not display the file count before every file name"},
+    {"fullpath",        'f', 0,          0, "Prints the full path of the file"},
+    {"ignore-warnings", 'i', 0,          0, "Ignore buffer size checking and run anyway; please note this leads to unknown behavior"},
+    {"output",          'o', "OUTFILE",  0, "Output to OUTFILE instead of stdout"},
+    {"line-size",       's', "LINESIZE", 0, "Change line (buffer) size, in characters"},
     {0}
 };
 
@@ -57,18 +60,19 @@ static error_t parse_opt(int key, char *arg, struct argp_state *state) {
     struct arguments *arguments = state->input;
 
     switch(key) {
+        case 'c':
+            // swap the behavior of the filecount flag
+            if (DEFAULT_FILECOUNT == 1)
+                arguments->filecount = 0;
+            else
+                arguments->filecount = 1;
+            break;
         case 'f':
             // swap the behavior of the fullpath flag
             if (DEFAULT_SHOW_FULLPATH == 1)
                 arguments->fullpath = 0;
             else
                 arguments->fullpath = 1;
-            break;
-        case 'o':
-            arguments->outfile = arg;
-            break;
-        case 's':
-            arguments->line_size = atoi(arg);
             break;
         case 'i':
             // swap the behavior of the warnings flag
@@ -77,6 +81,13 @@ static error_t parse_opt(int key, char *arg, struct argp_state *state) {
             else
                arguments->ignore_warnings = 1; 
             break;
+        case 'o':
+            arguments->outfile = arg;
+            break;
+        case 's':
+            arguments->line_size = atoi(arg);
+            break;
+        
         case ARGP_KEY_ARG:
             arguments->filenum = state->arg_num + 1;
             arguments->args[state->arg_num] = arg;

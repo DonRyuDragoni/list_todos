@@ -46,10 +46,11 @@ int main(int argc, char **argv)
 {
     struct arguments arguments;
     
-    // argument defaults
-    arguments.outfile = DEFAULT_PRINT_OUTFILE;
-    arguments.fullpath = DEFAULT_SHOW_FULLPATH;
-    arguments.line_size = DEFAULT_LINE_SIZE; 
+    // set each argument to its default
+    arguments.outfile         = DEFAULT_PRINT_OUTFILE;
+    arguments.fullpath        = DEFAULT_SHOW_FULLPATH;
+    arguments.line_size       = DEFAULT_LINE_SIZE; 
+    arguments.filecount       = DEFAULT_FILECOUNT;
     arguments.ignore_warnings = DEFAULT_IGNORE_WARNINGS;
 
     // let the magic begin
@@ -88,13 +89,18 @@ int main(int argc, char **argv)
         // error message and exit
         char buffer[arguments.line_size];
         if (!arguments.ignore_warnings && check_buffer_size(fp, arguments.line_size)) {
-            fprintf(outstream, "Warning: buffer size may be too small.\nConsider changing it with the -s flag (default size is %d)\n", DEFAULT_LINE_SIZE);
+            fprintf(outstream, "Warning: buffer size may be too small.\nConsider changing it with the -s flag (default size is %d)\n",
+                DEFAULT_LINE_SIZE);
+
             fclose(fp);
             return EXIT_FAILURE;
         }
 
         // Prints the filename
-        fprintf(outstream, "File %s:\n\n", filename);
+        if (arguments.filecount)
+            fprintf(outstream, "(%d/%d) File %s:\n\n", current_file + 1, arguments.filenum, filename);
+        else
+            fprintf(outstream, "File %s:\n\n", filename);
 
         // Search for the string TODO in current file, line by line
         // if found, print the whole line

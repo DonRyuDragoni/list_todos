@@ -8,7 +8,7 @@ be it in the beginning, middle or end. For proof of concept, there is a file
 called dummy_file.txt with some junk lines. When called on this file, output
 shoud be of sort:
 
-    File dummy_file.txt:
+    (1/1) File dummy_file.txt:
 
     On line 3:
         # this line is another comment TODO: add note
@@ -40,6 +40,7 @@ know how to do this, though).
 Options
 -------
 
+- `-c`, `--filecount`: do not show the count before each file name;
 - `-f`, `--fullpath`: instead of showing only the name of the file, print the
     full path;
 - `-i`, `--ignore-warnings`: ignores warnings of linesize and run anyway (this
@@ -60,15 +61,13 @@ It is known to the author that this program needs a lot of improvements, so I'm
 listing my thoughts now to avoid unecessary requests.
 
 - most important thing, find the line size without user help;
-- organize the code for the parser, now parser.h is just a copy of parser.c;
-- multiple filename inputs (don't know if needed).
+- organize the code for the parser (done, but not enough?)
 
 Notes
 -----
 
-My whole experience with some usefull C program is this one; so, please, do not
-complain about the `parser.h` and `parcer.c` files. I'll fix them in due time.
-Hopefully soon.
+My whole experience with writing useful C program is this one, so hopefully it's
+not as horrible as I imagine. If it is, please, tell me how to improve it.
 
 Also, bugs can be reported [here][issues], or on [this email][myemail].
 

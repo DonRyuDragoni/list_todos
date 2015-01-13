@@ -24,7 +24,7 @@
 #define DEFAULT_IGNORE_WARNINGS 0  // ignore warnings and run the program anyway
 
 // program version
-const char *argp_program_version = "list_todos 1.1";
+const char *argp_program_version = "list_todos 1.2";
 // email for bug fixes
 const char *argp_program_bug_address = "<dragoni.ryu@gmail.com>";
 
@@ -106,13 +106,13 @@ static error_t parse_opt(int key, char *arg, struct argp_state *state) {
  * Documentation, field 3 in ARGP
  *     Description of the non-option command-line arguments that we accept.
  */
-static char args_doc[] = "FILENAME";
+static char args_doc[] = "FILENAME(S)";
 
 /*
  * Program documentation, field 4 in ARGP
  *     Program documentation.
  */
-static char doc[] = "list_todos -- A program to list all TODO notes in a file.";
+static char doc[] = "List TODO notes in file(s).";
 
 // The ARGP structure
 static struct argp argp = {options, parse_opt, args_doc, doc};

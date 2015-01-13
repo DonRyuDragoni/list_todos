@@ -56,6 +56,13 @@ int main(int argc, char **argv)
     // let the magic begin
     argp_parse(&argp, argc, argv, 0, 0, &arguments);
 
+    // send the output to outfile, if asked
+    FILE *outstream;
+    if (arguments.outfile)
+        outstream = fopen(arguments.outfile, "w");
+    else
+        outstream = stdout;
+
     // for each file listed as an argument, run the program
     int current_file = 0;
     while(current_file < arguments.filenum) {
@@ -68,13 +75,6 @@ int main(int argc, char **argv)
             filename = full_filename;
         else
             filename = arguments.args[current_file];
-
-        // send the output to outfile, if asked
-        FILE *outstream;
-        if (arguments.outfile)
-            outstream = fopen(arguments.outfile, "w");
-        else
-            outstream = stdout;
 
         // Open the file and check existence
         FILE *fp = fopen(full_filename, "r");
@@ -98,16 +98,16 @@ int main(int argc, char **argv)
 
         // Prints the filename
         if (arguments.filecount)
-            fprintf(outstream, "(%d/%d) File %s:\n\n", current_file + 1, arguments.filenum, filename);
+            fprintf(outstream, "(%d/%d) File %s:\n", current_file + 1, arguments.filenum, filename);
         else
-            fprintf(outstream, "File %s:\n\n", filename);
+            fprintf(outstream, "File %s:\n", filename);
 
         // Search for the string TODO in current file, line by line
         // if found, print the whole line
         int line_num = 1;
         while (fgets(buffer, sizeof buffer, fp) != NULL) {
             if (strstr(buffer, TODO) != NULL) {
-                fprintf(outstream, "On line %d:\n", line_num);
+                fprintf(outstream, "|_ line %d:\n", line_num);
                 fprintf(outstream, "\t%s", buffer);
             }
             ++line_num;
@@ -116,7 +116,7 @@ int main(int argc, char **argv)
         fclose(fp);
 
         // if current file is not the last, print an aditional newline
-        if(current_file != arguments.filenum - 1) printf("\n");
+        if(current_file != arguments.filenum - 1) fprintf(outstream, "\n");
 
         // and go to the next
         ++current_file;

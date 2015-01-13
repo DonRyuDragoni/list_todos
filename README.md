@@ -71,3 +71,4 @@ not as horrible as I imagine. If it is, please, tell me how to improve it.
 Also, bugs can be reported [here][issues], or on [this email][myemail].
 
 [myemail]: <mailto:dragoni.ryu@gmail.com>
+[issues]: https://www.github.com/donryudragoni/list_todos/issues

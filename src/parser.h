@@ -14,7 +14,7 @@
 #define PARSER_H_8380A159_48C3_4BE8_9E90_3C7D7B0F1F28
 
 // Required libraries
-#include<argp.h>
+#include <argp.h>
 
 // Default behavior of the program
 #define DEFAULT_LINE_SIZE 700      // buffer to read line by line
@@ -29,11 +29,12 @@ const char *argp_program_bug_address = "<dragoni.ryu@gmail.com>";
 
 // struct to communicate with parse_opt
 struct arguments {
-    char *args[1]; // ARG1, the name of the file
     int fullpath;  // the -f flag, show or not the full path
     int line_size; // argument for -s, change default size of lines
     char *outfile; // argument for -o, file to be printed in
     int ignore_warnings;  // the -i flag, ignore or not warnings
+    int filenum; // number of files listed as arguments
+    char *args[]; // name of the files to be opened
 };
 
 /*
@@ -77,8 +78,7 @@ static error_t parse_opt(int key, char *arg, struct argp_state *state) {
                arguments->ignore_warnings = 1; 
             break;
         case ARGP_KEY_ARG:
-            if(state->arg_num >= 1)
-                argp_usage(state);
+            arguments->filenum = state->arg_num + 1;
             arguments->args[state->arg_num] = arg;
             break;
         case ARGP_KEY_END:
